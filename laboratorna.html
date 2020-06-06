@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Лабораторна 4</title>
+<script category="text/javascript">
+
+function loadXML(file) {
+ try { 
+ var req = new XMLHttpRequest();
+ req.open("GET", file, false);
+ req.send(null);
+ return req.responseXML;
+ }
+ catch (e) {
+
+ try {
+ var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+ xmlDoc.async = false;
+ xmlDoc.load(file);
+ return xmlDoc;
+ }
+ catch (e) {
+ alert(e.message);
+ return null;
+ }
+ }
+} 
+
+</script>
+<style type="text/css">
+   .data { 
+    width: 200px; 
+    padding: 5px;
+    padding-right: 20px; 
+    float: left;
+}
+</style>
+</head>
+<body>
+<div>
+	<a name="Молочные продукты" id="Молочные продукты" href="#" onmouseover="choose(this)" style="color: red">Молочные продукты</a> <br /> 
+	<a name="Консервы" id="Молочные продукты" href="#" onmouseover="choose(this)" style="color: blue;text-decoration: none;" >Консервы</a> <br /> 
+	<a name="Овощи" id="Молочные продукты" href="#" onmouseover="choose(this)" style="color: green;">Овощи</a> <br /> 
+	<a name="Мясо" id="Молочные продукты" href="#" onmouseover="choose(this)" style="color: green;">Мясо</a> <br /> 
+</div>
+
+<div class="data" id="data">
+	<center>
+	<br /> 
+	<div name="title0" id="title0"></div>
+	<br /> <br />
+	<div name="title1" id="title1"></div>
+	<br /> <br />
+	<div name="title2" id="title2"></div>
+	<br /> 
+	</center>
+</div>
+
+<script category="text/javascript">
+
+var xmlDoc = loadXML("https://IvanKhryapko.github.io/str.xml");
+
+function choose(coloredLink) {
+ var group = coloredLink.name;
+ var index = 0;
+ var divNum = 3; 
+
+
+
+ for (var i = 0; i < xmlDoc.getElementsByTagName("product").length; i++) {
+
+ var title = "title" + index;
+ var data = document.getElementById('data');
+
+ if (xmlDoc.getElementsByTagName("product")
+ [i].attributes.getNamedItem("group").nodeValue == group) { 
+
+
+ document.getElementById(title).innerHTML = xmlDoc.getElementsByTagName("title")[i].childNodes[0].nodeValue;
+
+ index++;
+   if (group == "Молочные продукты") {
+ 	data.style.Color = "red";
+ 	data.style.backgroundColor = "tan";
+}
+   if (group == "Консервы") {
+ 	data.style.color = "blue";
+ 	data.style.backgroundColor = "aqua";
+}
+
+ 	if (group == "Овощи") {
+ 	data.style.color = "green";
+ 	data.style.backgroundColor = "yellow";
+}
+ 	if (group == "Мясо") {
+ 	data.style.color = "gray";
+ 	data.style.backgroundColor = "lime";
+}
+
+ }
+
+}
+
+ for (var temp = index; temp < divNum; temp++) {
+
+ title = "title" + temp;
+
+ document.getElementById(title).innerHTML = "";
+
+ }
+
+}
+</script>
+</body>
+</html>
