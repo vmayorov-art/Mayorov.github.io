@@ -1,1 +1,0 @@
-# maiorov.github.io
